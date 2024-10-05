@@ -19,7 +19,7 @@ export async function consultarPrograma(){
            nm_canal             canal,
            nm_programa          nome,
            ds_genero            genero,
-           hr_programa          programa
+           hr_programa          horario
 
     from tb_canal_programa
 
