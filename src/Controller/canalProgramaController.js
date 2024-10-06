@@ -35,7 +35,8 @@ endpoints.get('/canalPrograma/', async (req, resp) => {
 
 endpoints.get('/canalPrograma/:id', async (req, resp) => {
     try {
-        let registros = await db.consultarProgramaId();
+        let id = req.params.id;
+        let registros = await db.consultarProgramaId(id);
         resp.send(registros);
     }
 

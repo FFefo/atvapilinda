@@ -13,7 +13,7 @@ endpoints.post('/usuario/', async (req, resp) => {
         })
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -26,7 +26,7 @@ endpoints.get('/usuario/', async (req, resp) => {
         resp.send(registros);
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -35,11 +35,13 @@ endpoints.get('/usuario/', async (req, resp) => {
 
 endpoints.get('/usuario/:id', async (req, resp) => {
     try {
-        let registros = await db.consultarUsuarioId();
+        let id = req.params.id;
+
+        let registros = await db.consultarUsuarioId(id);
         resp.send(registros);
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -52,15 +54,15 @@ endpoints.put('/usuario/:id', async (req, resp) => {
         let usuario = req.body;
 
         let linhasAfetadas = await db.alterarUsuario(id, usuario);
-        if(linhasAfetadas >= 1){
+        if (linhasAfetadas >= 1) {
             resp.send();
         }
-        else{
-            resp.status(400).send({erro: 'Nenhum registro encontrado'})
+        else {
+            resp.status(400).send({ erro: 'Nenhum registro encontrado' })
         }
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -68,18 +70,19 @@ endpoints.put('/usuario/:id', async (req, resp) => {
 })
 
 endpoints.delete('/usuario/:id', async (req, resp) => {
-    try { let id = req.params.id;
+    try {
+        let id = req.params.id;
 
         let linhasAfetadas = await db.removerUsuario(id);
-        if(linhasAfetadas >= 1){
+        if (linhasAfetadas >= 1) {
             resp.send()
         }
-        else{
-            resp.status(400).send({erro: 'Nenhum registro encontrado'})
+        else {
+            resp.status(400).send({ erro: 'Nenhum registro encontrado' })
         }
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })

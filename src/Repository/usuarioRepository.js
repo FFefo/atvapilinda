@@ -39,7 +39,7 @@ export async function consultarUsuarioId(id){
     let resposta = await con.query(comando, [id]);
     let registros = resposta[0]
 
-    return registros;
+    return registros[0];
 }
 
 export async function alterarUsuario(id, usuario){

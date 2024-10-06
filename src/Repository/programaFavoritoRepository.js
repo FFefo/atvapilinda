@@ -15,11 +15,9 @@ export async function inserirFavorito(favorito) {
 
 export async function consultarFavorito() {
     let comando = `
-select * from tb_programa_favorito;
-
     select id_programa_favorito       id,
-           nm_usuario                 usuario,
-           nm_programa         		  programa,
+           usuario_id                 usuario,
+           canal_programa_id          programa,
            vl_avaliacao               avaliacao
 
     from tb_programa_favorito
@@ -35,18 +33,20 @@ select * from tb_programa_favorito;
 
 }
 
-export async function consultarFavoritoId(id){
+export async function consultarFavoritoId(id) {
     let comando = `
-    select id_canal     id,
-           nm_usuario                 usuario,
-           nm_programa         		  programa,
-           vl_avaliacao               avaliacao
+    select id_programa_favorito     		  id,
+           usuario_id                 		  usuario,
+           canal_programa_id         		  programa,
+           vl_avaliacao               		  avaliacao
 
-      from tb_canal
-      where id_canal = ?
+      from tb_programa_favorito
 
-          inner join tb_usuario on tb_usuario.id_usuario = tb_programa_favorito.id_programa_favorito
-    inner join tb_canal_programa on tb_canal_programa.id_canal_programa = tb_programa_favorito.id_programa_favorito;
+          
+	inner join tb_usuario on tb_usuario.id_usuario = tb_programa_favorito.id_programa_favorito
+    inner join tb_canal_programa on tb_canal_programa.id_canal_programa = tb_programa_favorito.id_programa_favorito
+    
+          where id_programa_favorito = 6;
     `;
 
     let resposta = await con.query(comando, [id]);
@@ -56,7 +56,7 @@ export async function consultarFavoritoId(id){
 
 }
 
-export async function alterarFavorito(id, favorito){
+export async function alterarFavorito(id, favorito) {
     let comando = `
     update tb_programa_favorito
        set usuario_id = ?,
@@ -71,7 +71,7 @@ export async function alterarFavorito(id, favorito){
     return info.affectedRows;
 }
 
-export async function removerProgramaFavorito(id){
+export async function removerProgramaFavorito(id) {
     let comando = `
     delete from tb_programa_favorito
     where id_programa_favorito = ?
@@ -79,6 +79,6 @@ export async function removerProgramaFavorito(id){
 
     let resposta = await con.query(comando, [id]);
     let info = resposta[0];
-    
+
     return info.affectedRows;
 }

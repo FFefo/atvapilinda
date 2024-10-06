@@ -53,7 +53,7 @@ export async function consultarProgramaId(id){
     let resposta = await con.query(comando, [id]);
     let registros = resposta[0];
 
-    return registros;
+    return registros[0];
 
 }
 
@@ -62,11 +62,12 @@ export async function alterarPrograma(id, programa){
     update tb_canal_programa
        set canal_id = ?,
            nm_programa = ?,
-           ds_genero = ?
+           ds_genero = ?,
+           hr_programa = ?
        where id_canal_programa = ?
     `;
 
-    let resposta = await con.query(comando, [programa.canal, programa.nome, programa.genero, id]);
+    let resposta = await con.query(comando, [programa.canal, programa.nome, programa.genero, programa.horario, id]);
     let info = resposta[0];
 
     return info.affectedRows;
