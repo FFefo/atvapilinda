@@ -33,6 +33,19 @@ endpoints.get('/programaFavorito/', async (req, resp) => {
     }
 })
 
+endpoints.get('/programaFavorito/:id', async (req, resp) => {
+    try {
+        let registros = await db.consultarFavoritoId();
+        resp.send(registros);
+    }
+
+    catch(err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
 endpoints.put('/programaFavorito/:id', async (req, resp) => {
     try {
         let id = req.params.id;

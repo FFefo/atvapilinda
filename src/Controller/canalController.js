@@ -13,7 +13,7 @@ endpoints.post('/canal/', async (req, resp) => {
         })
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -26,7 +26,22 @@ endpoints.get('/canal/', async (req, resp) => {
         resp.send(registros);
     }
 
-    catch(err) {
+    catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+endpoints.get('/canal/:id', async (req, resp) => {
+    try {
+        let id = req.params.id;
+
+        let registros = await db.consultarCanalId(id);
+        resp.send(registros);
+    }
+
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -39,15 +54,15 @@ endpoints.put('/canal/:id', async (req, resp) => {
         let canal = req.body;
 
         let linhasAfetadas = await db.alterarCanal(id, canal);
-        if(linhasAfetadas >= 1){
+        if (linhasAfetadas >= 1) {
             resp.send();
         }
-        else{
-            resp.status(400).send({erro: 'Nenhum registro encontrado'})
+        else {
+            resp.status(400).send({ erro: 'Nenhum registro encontrado' })
         }
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })
@@ -55,18 +70,19 @@ endpoints.put('/canal/:id', async (req, resp) => {
 })
 
 endpoints.delete('/canal/:id', async (req, resp) => {
-    try { let id = req.params.id;
+    try {
+        let id = req.params.id;
 
         let linhasAfetadas = await db.removerCanal(id);
-        if(linhasAfetadas >= 1){
+        if (linhasAfetadas >= 1) {
             resp.send()
         }
-        else{
-            resp.status(400).send({erro: 'Nenhum registro encontrado'})
+        else {
+            resp.status(400).send({ erro: 'Nenhum registro encontrado' })
         }
     }
 
-    catch(err) {
+    catch (err) {
         resp.status(400).send({
             erro: err.message
         })

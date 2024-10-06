@@ -35,6 +35,27 @@ select * from tb_programa_favorito;
 
 }
 
+export async function consultarFavoritoId(id){
+    let comando = `
+    select id_canal     id,
+           nm_usuario                 usuario,
+           nm_programa         		  programa,
+           vl_avaliacao               avaliacao
+
+      from tb_canal
+      where id_canal = ?
+
+          inner join tb_usuario on tb_usuario.id_usuario = tb_programa_favorito.id_programa_favorito
+    inner join tb_canal_programa on tb_canal_programa.id_canal_programa = tb_programa_favorito.id_programa_favorito;
+    `;
+
+    let resposta = await con.query(comando, [id]);
+    let registros = resposta[0];
+
+    return registros[0];
+
+}
+
 export async function alterarFavorito(id, favorito){
     let comando = `
     update tb_programa_favorito

@@ -27,6 +27,21 @@ export async function consultarUsuario(){
     return registros;
 }
 
+export async function consultarUsuarioId(id){
+    let comando = `
+    select id_usuario       id,
+           nm_usuario       nome
+
+      from tb_usuario
+      where id_usuario = ?
+    `
+
+    let resposta = await con.query(comando, [id]);
+    let registros = resposta[0]
+
+    return registros;
+}
+
 export async function alterarUsuario(id, usuario){
     let comando = `
     update tb_usuario

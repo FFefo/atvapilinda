@@ -33,6 +33,20 @@ endpoints.get('/canalPrograma/', async (req, resp) => {
     }
 })
 
+endpoints.get('/canalPrograma/:id', async (req, resp) => {
+    try {
+        let registros = await db.consultarProgramaId();
+        resp.send(registros);
+    }
+
+    catch(err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+
 endpoints.put('/canalPrograma/:id', async (req, resp) => {
     try {
         let id = req.params.id;

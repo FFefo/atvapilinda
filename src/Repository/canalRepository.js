@@ -30,6 +30,24 @@ export async function consultarCanal(){
 
 }
 
+export async function consultarCanalId(id){
+    let comando = `
+    select id_canal     id,
+           nm_canal     nome,
+           nr_canal     numero,
+           bt_aberto    aberto
+
+      from tb_canal
+      where id_canal = ?
+    `;
+
+    let resposta = await con.query(comando, [id]);
+    let registros = resposta[0];
+
+    return registros[0];
+
+}
+
 export async function alterarCanal(id, canal){
     let comando = `
     update tb_canal

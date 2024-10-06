@@ -34,6 +34,29 @@ export async function consultarPrograma(){
 
 }
 
+export async function consultarProgramaId(id){
+    let comando = `
+    select id_canal_programa    id,
+           nm_canal             canal,
+           nm_programa          nome,
+           ds_genero            genero,
+           hr_programa          horario
+
+    from tb_canal_programa
+
+    inner join tb_canal 
+    on tb_canal.id_canal = tb_canal_programa.id_canal_programa
+
+    where id_canal_programa = ?
+    `;
+
+    let resposta = await con.query(comando, [id]);
+    let registros = resposta[0];
+
+    return registros;
+
+}
+
 export async function alterarPrograma(id, programa){
     let comando = `
     update tb_canal_programa
